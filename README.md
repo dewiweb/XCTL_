@@ -30,11 +30,19 @@ Tools and documentation for working with Behringer X-Touch control surface MIDI 
 
 ## Quick Start
 
-1. For LCD control:
-   ```bash
-   python scripts/send_scribble.py
-   ```
-2. Open [Scribble Generator](https://dewiweb.github.io/XCTL_/scribble_generator.html) in browser
+### Option 1: Python Script
+For direct MIDI control:
+```bash
+python scripts/send_scribble.py --text "YOUR_TEXT" --color 01 --align center
+```
+
+### Option 2: Web Interface
+1. Generate your message using the [Scribble Generator](https://dewiweb.github.io/XCTL_/tools/scribble_generator.html)
+2. Copy the output SysEx message
+3. Send via MIDI software or the included script:
+```bash
+python scripts/send_scribble.py --sysex "00 00 66 58..."
+```
 
 ## Dependencies
 
