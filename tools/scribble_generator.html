@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>X-Touch Scribble Strip Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    .panel { background: #f5f5f5; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+    .result { font-family: monospace; word-break: break-all; background: #333; color: #0f0; padding: 10px; }
+    input, select { padding: 8px; margin: 5px 0; }
+    button { padding: 10px 15px; background: #0066cc; color: white; border: none; cursor: pointer; }
+    .color-option { display: inline-block; width: 20px; height: 20px; margin-right: 5px; vertical-align: middle; }
+    .color-section {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+    .color-options {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0;
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .color-option {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .color-option:hover {
+      border-color: #0066cc;
+    }
+    .color-option input {
+      opacity: 0;
+      position: absolute;
+    }
+    .color-option input:checked + span {
+      border: 2px solid #0066cc;
+    }
+    .preview {
+      margin-top: 10px;
+      border-radius: 3px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>X-Touch Scribble Strip Generator</h1>
+  
+  <div class="panel">
+    <h2>Channel Selection</h2>
+    <select id="channel">
+      <option value="20">Channel 1</option>
+      <option value="21">Channel 2</option>
+      <option value="22">Channel 3</option>
+      <option value="23">Channel 4</option>
+      <option value="24">Channel 5</option>
+      <option value="25">Channel 6</option>
+      <option value="26">Channel 7</option>
+      <option value="27">Channel 8</option>
+    </select>
+  </div>
+
+  <div class="panel">
+    <h2>Line 1 Settings</h2>
+    <input type="text" id="line1" maxlength="7" placeholder="Text (max 7 chars)">
+    <select id="line1Align">
+      <option value="center">Center</option>
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+    </select>
+    <select id="line1Color">
+      <option value="00" style="background:#222;color:#aaa">Black BG, Dark Text</option>
+      <option value="01" style="background:#d66;color:#400">Red BG, Dark Text</option>
+      <option value="02" style="background:#6d6;color:#040">Green BG, Dark Text</option>
+      <option value="03" style="background:#dd6;color:#440">Yellow BG, Dark Text</option>
+      <option value="04" style="background:#66d;color:#004">Blue BG, Dark Text</option>
+      <option value="05" style="background:#d6d;color:#404">Magenta BG, Dark Text</option>
+      <option value="06" style="background:#6dd;color:#044">Cyan BG, Dark Text</option>
+      <option value="07" style="background:#eee;color:#888;border:1px solid #000">White BG, Dark Text</option>
+      <option value="40" style="background:#222;color:#fff">Black BG, Bright Text</option>
+      <option value="41" style="background:#d66;color:#fff">Red BG, Bright Text</option>
+      <option value="42" style="background:#6d6;color:#fff">Green BG, Bright Text</option>
+      <option value="43" style="background:#dd6;color:#fff">Yellow BG, Bright Text</option>
+      <option value="44" style="background:#66d;color:#fff">Blue BG, Bright Text</option>
+      <option value="45" style="background:#d6d;color:#fff">Magenta BG, Bright Text</option>
+      <option value="46" style="background:#6dd;color:#fff">Cyan BG, Bright Text</option>
+      <option value="47" style="background:#fff;color:#000">White BG, Bright Text</option>
+    </select>
+  </div>
+
+  <div class="panel">
+    <h2>Line 2 Settings</h2>
+    <input type="text" id="line2" maxlength="7" placeholder="Text (max 7 chars)">
+    <select id="line2Align">
+      <option value="center">Center</option>
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+    </select>
+    <select id="line2Color">
+      <option value="00" style="background:#222;color:#aaa">Black BG, Dark Text</option>
+      <option value="10" style="background:#222;color:#fff">Black BG, Bright Text</option>
+      <option value="08" style="background:#d66;color:#400">Red BG, Dark Text</option>
+      <option value="18" style="background:#d66;color:#fff">Red BG, Bright Text</option>
+      <option value="09" style="background:#6d6;color:#040">Green BG, Dark Text</option>
+      <option value="19" style="background:#6d6;color:#fff">Green BG, Bright Text</option>
+      <option value="0A" style="background:#dd6;color:#440">Yellow BG, Dark Text</option>
+      <option value="1A" style="background:#dd6;color:#fff">Yellow BG, Bright Text</option>
+      <option value="0B" style="background:#66d;color:#004">Blue BG, Dark Text</option>
+      <option value="1B" style="background:#66d;color:#fff">Blue BG, Bright Text</option>
+      <option value="0C" style="background:#d6d;color:#404">Magenta BG, Dark Text</option>
+      <option value="1C" style="background:#d6d;color:#fff">Magenta BG, Bright Text</option>
+      <option value="0D" style="background:#6dd;color:#044">Cyan BG, Dark Text</option>
+      <option value="1D" style="background:#6dd;color:#fff">Cyan BG, Bright Text</option>
+      <option value="0E" style="background:#eee;color:#888;border:1px solid #000">White BG, Dark Text</option>
+      <option value="1E" style="background:#fff;color:#000">White BG, Bright Text</option>
+    </select>
+  </div>
+
+  <button onclick="generateMessage()">Generate SysEx</button>
+
+  <div class="panel">
+    <h2>Output Message</h2>
+    <div class="result" id="output">00 00 66 58 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</div>
+    <p>Note: Omit F0/F7 when sending to X-Touch</p>
+  </div>
+
+  <script>
+    function generateMessage() {
+      // Get channel
+      const channel = document.getElementById('channel').value;
+      
+      // Process line 1
+      const line1Text = document.getElementById('line1').value;
+      const line1Align = document.getElementById('line1Align').value;
+      const line1Bytes = formatLine(line1Text, line1Align);
+      
+      // Get color values
+      const line1Color = document.getElementById('line1Color').value;
+      
+      // Process line 2
+      const line2Text = document.getElementById('line2').value;
+      const line2Align = document.getElementById('line2Align').value;
+      const line2Bytes = formatLine(line2Text, line2Align);
+      
+      // Get color values
+      const line2Color = document.getElementById('line2Color').value;
+      
+      // Calculate final color byte
+      const colorByte = (parseInt(line1Color, 16) | parseInt(line2Color, 16)).toString(16).padStart(2, '0');
+      
+      // Build message
+      const message = `00 00 66 58 ${channel} ${colorByte} ${line1Bytes} ${line2Bytes}`;
+      document.getElementById('output').textContent = message;
+    }
+    
+    function formatLine(text, alignment) {
+      // Pad text based on alignment
+      let padded = text;
+      const padLength = 7 - text.length;
+      
+      if (alignment === 'left') {
+        padded = text + ' '.repeat(padLength);
+      } else if (alignment === 'right') {
+        padded = ' '.repeat(padLength) + text;
+      } else { // center
+        const leftPad = Math.floor(padLength / 2);
+        const rightPad = padLength - leftPad;
+        padded = ' '.repeat(leftPad) + text + ' '.repeat(rightPad);
+      }
+      
+      // Convert to hex bytes
+      return Array.from(padded)
+        .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+        .join(' ');
+    }
+  </script>
+</body>
+</html>
