@@ -86,23 +86,41 @@ All controls follow these principles (exceptions noted):
 
 ### LED Control (Outbound)
 
-| MIDI Value | LED State |
-|------------|-----------|
-| 0          | OFF       |
-| 1          | FLASHING  |
-| 2-127      | SOLID     |
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Control name(s) on X‐Touch</th>
+      <th>OFF</th>
+      <th>FLASHING</th>
+      <th>SOLID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Note On</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>-</td>
+      <td>Note On</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>2-127</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Note On</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
 
 *Applies to all LED controls listed below*
-
-||| Control name(s) on X‐Touch||
-| MIDI Value | Control Name |||
-|| OFF | FLASHING | SOLID |
-|------------|--------------|-----|----------|-------|
-| 0 | Note On | - | - |
-| 1 | - | Note On | - |
-| 2-127 | - | - | Note On |
-
-*Note: Replace <...> placeholders with actual control names and colors*
 
 ### Button Actions (Inbound)
 | | Control name(s) on X-Touch |
