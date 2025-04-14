@@ -94,8 +94,8 @@ All controls follow these principles (exceptions noted):
 
 *Applies to all LED controls listed below*
 
-| | Control name(s) on X‐Touch|
-| MIDI Value | Control Name |
+||| Control name(s) on X‐Touch||
+| MIDI Value | Control Name |||
 || OFF | FLASHING | SOLID |
 |------------|--------------|-----|----------|-------|
 | 0 | Note On | - | - |
