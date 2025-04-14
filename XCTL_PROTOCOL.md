@@ -89,8 +89,10 @@ All controls follow these principles (exceptions noted):
 <table>
   <thead>
     <tr>
-      <th>MIDI Value</th>
       <th>Control name(s) on X‐Touch</th>
+    </tr>
+    <tr>
+      <th>MIDI Value</th>
       <th>OFF</th>
       <th>FLASHING</th>
       <th>SOLID</th>
@@ -100,7 +102,6 @@ All controls follow these principles (exceptions noted):
     <tr>
       <td>0</td>
       <td>Note On</td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
     </tr>
@@ -116,7 +117,6 @@ All controls follow these principles (exceptions noted):
       <td>-</td>
       <td>-</td>
       <td>Note On</td>
-      <td>-</td>
     </tr>
   </tbody>
 </table>
