@@ -89,6 +89,7 @@ All controls follow these principles (exceptions noted):
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Control name(s) on X‐Touch</th>
     </tr>
     <tr>
