@@ -85,7 +85,16 @@ All controls follow these principles (exceptions noted):
 ## Command Reference
 
 ### LED Control (Outbound)
-||Control name(s) on X‐Touch|
+
+| MIDI Value | LED State |
+|------------|-----------|
+| 0          | OFF       |
+| 1          | FLASHING  |
+| 2-127      | SOLID     |
+
+*Applies to all LED controls listed below*
+
+| | Control name(s) on X‐Touch|
 | MIDI Value | Control Name |
 || OFF | FLASHING | SOLID |
 |------------|--------------|-----|----------|-------|
