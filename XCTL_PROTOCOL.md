@@ -90,7 +90,7 @@ All controls follow these principles (exceptions noted):
   <thead>
     <tr>
       <th></th>
-      <th>Control name(s) on X‐Touch</th>
+      <th colspan="3">Control name(s) on X‐Touch</th>
     </tr>
     <tr>
       <th>MIDI Value</th>
@@ -110,7 +110,6 @@ All controls follow these principles (exceptions noted):
       <td>1</td>
       <td>-</td>
       <td>Note On</td>
-      <td>-</td>
       <td>-</td>
     </tr>
     <tr>
