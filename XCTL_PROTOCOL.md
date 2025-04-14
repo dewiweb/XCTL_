@@ -89,7 +89,8 @@ All controls follow these principles (exceptions noted):
 <table>
   <thead>
     <tr>
-      <th colspan="2">Control name(s) on X‐Touch</th>
+      <th>MIDI Value</th>
+      <th>Control name(s) on X‐Touch</th>
       <th>OFF</th>
       <th>FLASHING</th>
       <th>SOLID</th>
