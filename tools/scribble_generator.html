@@ -52,6 +52,26 @@
       align-items: center;
       justify-content: center;
     }
+    .result-panel {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .copy-btn {
+      padding: 8px 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: #45a049;
+    }
+    .copy-btn.copied {
+      background: #2196F3;
+    }
   </style>
 </head>
 <body>
@@ -131,7 +151,10 @@
 
   <div class="panel">
     <h2>Output Message</h2>
-    <div class="result" id="output">00 00 66 58 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</div>
+    <div class="result-panel">
+      <div class="result" id="output">00 00 66 58 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</div>
+      <button class="copy-btn" id="copyBtn">Copy</button>
+    </div>
     <p>Note: Omit F0/F7 when sending to X-Touch</p>
   </div>
 
@@ -184,6 +207,21 @@
         .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
         .join(' ');
     }
+  </script>
+  <script>
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      const result = document.getElementById('output');
+      navigator.clipboard.writeText(result.textContent)
+        .then(() => {
+          const btn = document.getElementById('copyBtn');
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+    });
   </script>
 </body>
 </html>
