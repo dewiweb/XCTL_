@@ -34,7 +34,7 @@ Tools and documentation for working with Behringer X-Touch control surface MIDI 
    ```bash
    python scripts/send_scribble.py
    ```
-2. Open `tools/scribble_generator.html` in browser
+2. Open [Scribble Generator](https://dewiweb.github.io/XCTL_/scribble_generator.html) in browser
 
 ## Dependencies
 
