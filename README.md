@@ -2,18 +2,24 @@
 
 Tools and documentation for working with Behringer X-Touch control surface MIDI protocol
 
-## Project Structure
+## Verified Project Structure
 
 ```
 .
-├── docs/               - Protocol documentation
-│   ├── XCTL_PROTOCOL.md
-│   └── XCTL_MIDI_MAPPINGS_SUMMARY.md
-├── tools/              - Web-based utilities
-│   └── scribble_generator.html
-├── scripts/            - Python scripts
-│   └── send_scribble.py
-└── examples/           - Example configurations
+├── docs/
+│   ├── XCTL_PROTOCOL.md          - Core protocol documentation
+│   ├── XCTL_LCD_7SEGMENT.md      - 7-segment display mappings
+│   ├── XCTL_LED_RING_MAPPINGS.md - LED ring behavior documentation
+│   └── references/
+│       ├── Xctl Protocol for X-Touch V1.0.pdf
+│       └── xctl.xlsx             - Spreadsheet reference
+├── tools/
+│   └── scribble_generator.html   - Interactive SysEx generator
+├── scripts/
+│   └── send_scribble.py          - Python MIDI sender
+├── examples/                     - (Planned for future use)
+├── LICENSE                       - Project license
+└── README.md                     - This documentation
 ```
 
 ## Key Features
