@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OSC Control Panel</title>
+    <script src="../components/shared/osc-manager.js"></script>
+    <link rel="stylesheet" href="../components/shared/styles.css">
+</head>
+<body>
+    <h1>OSC Control Panel</h1>
+    
+    <div class="panel">
+        <h2>Connection Settings</h2>
+        <div>
+            <label>OSC Output IP:</label>
+            <input type="text" id="osc-output-ip" value="127.0.0.1">
+        </div>
+        <div>
+            <label>OSC Output Port:</label>
+            <input type="number" id="osc-output-port" value="8000">
+        </div>
+        <div>
+            <label>OSC Input Port:</label>
+            <input type="number" id="osc-input-port" value="9000">
+        </div>
+        <button id="connect-btn">Connect</button>
+    </div>
+    
+    <script type="module">
+        import OSCManager from '../components/shared/osc-manager.js';
+        
+        const osc = new OSCManager();
+        
+        // Debug event listeners
+        document.addEventListener('encoder-change', (e) => {
+          console.log('Received encoder-change:', e.detail);
+        });
+
+        console.log('OSC Control Panel initialized');
+        
+        // Load saved settings
+        document.getElementById('osc-output-ip').value = osc.settings.oscOutputIp;
+        document.getElementById('osc-output-port').value = osc.settings.oscOutputPort;
+        document.getElementById('osc-input-port').value = osc.settings.oscInputPort;
+        
+        document.getElementById('connect-btn').addEventListener('click', async () => {
+            const settings = {
+                oscOutputIp: document.getElementById('osc-output-ip').value,
+                oscOutputPort: parseInt(document.getElementById('osc-output-port').value),
+                oscInputPort: parseInt(document.getElementById('osc-input-port').value)
+            };
+            
+            osc.updateSettings(settings);
+            
+            if (await osc.connect()) {
+                window.opener?.postMessage({ type: 'oscSettingsUpdate', settings }, '*');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #111;
+  --panel-bg: #222;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #1a1a1a;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.channels-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#connection-panel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+#connection-status {
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: #333;
+}
+
+.osc-settings-link {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  background: #444;
+  border-radius: 3px;
+}
+
+.osc-settings-link:hover {
+  background: #555;
+}
+
+.buttons button.active {
+  background-color: #ff0000;
+  color: white;
+}
+
+/* VU Meter */
+.vu-meter {
+  height: 100px;
+  width: 10px;
+  background: #222;
+  margin: 10px auto;
+  position: relative;
+}
+
+.vu-meter::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #4CAF50;
+  transition: height 0.1s;
+}
+
+.channel-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border-radius: 14px;
+  min-width: 200px;
+  max-width: 240px;
+  width: 100%;
+  margin: 12px 8px;
+  gap: 0;
+}
+
+.rotary-section {
+  width: 100%;
+  background: #6a2323;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  padding: 14px 0 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.scribble-strip {
+  width: 90%;
+  background: #181818;
+  border-radius: 6px;
+  border: 1.5px solid #333;
+  margin: 6px 0 10px 0;
+  min-height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+.btn-vu-section {
+  width: 100%;
+  min-width: 0;
+  background: #544b1c;
+  border-radius: 8px;
+  border: 1.5px solid #b2a14a;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 8px 4px 8px 4px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.x-vu-meter {
+  flex: none;
+  width: 38px;
+  min-width: 38px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 0;
+}
+
+.x-button-group {
+  flex: 1 1 0%;
+  min-width: 68px;
+  max-width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.fader-section {
+  width: 100%;
+  background: #2c3626;
+  border-radius: 0 0 14px 14px;
+  border: 1.5px solid #3d4d3d;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0 16px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  min-height: 180px;
+}
+
+.x-fader {
+  margin: 0 auto;
+}
+
+.rotary-knob {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.scribble-strip {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.mid-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.x-button-group {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.x-vu-meter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.x-fader {
+  margin-top: 10px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vu-rotary-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 70px;
+}
+
+.vu-meter {
+  flex-shrink: 0;
+  margin-right: 4px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.rotary-knob {
+  flex-shrink: 0;
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.scribble-strip {
+  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.x-button-group {
+  margin: 12px 0 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x-fader {
+  margin-top: 14px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x-button-group .x-button {
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .channel-strip {
+    min-width: 140px;
+    max-width: 170px;
+    gap: 0;
+    margin: 6px 2px;
+  }
+  .btn-vu-section {
+    width: 100%;
+    min-width: 0;
+    gap: 7px;
+    padding: 4px 1px 4px 1px;
+    margin-bottom: 6px;
+  }
+  .x-button-group {
+    min-width: 40px;
+    max-width: 70px;
+  }
+}
+
+.scribble-strip {
+  background: #333;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-family: monospace;
+  margin-bottom: 10px;
+}
+
+.scribble-strip {
+  height: 30px;
+  background: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.scribble-strip {
+  min-height: 40px;
+  width: 80px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  padding: 2px;
+  white-space: pre;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.scribble-strip::after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+
+.scribble-strip[contenteditable="true"] {
+  outline: 1px dashed #666;
+}
+
+#connection-panel {
+  background: #444;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: inline-block;
+  width: 80px;
+}
+
+#connect-btn {
+  padding: 5px 15px;
+  margin-top: 10px;
+}
+
+/* Channel strip styles */
+.channels-container {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 15px;
+  padding: 10px;
+  overflow-x: auto;
+  height: 500px;
+  align-items: flex-end;
+}
+
+.channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100px;
+  margin: 0 10px;
+  padding: 20px;
+  background: #2a2a2a;
+  border-radius: 5px;
+  min-height: 500px;
+}
+
+.rotary-container {
+  order: 1;
+}
+
+.scribble-strip {
+  order: 2;
+  width: 80px;
+  height: 40px;
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.buttons {
+  order: 3;
+  flex: 1;
+  min-height: 180px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+.fader-container {
+  order: 4;
+  flex: 2;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.vu-meter {
+  width: 100%;
+  height: 5px;
+  background: #333;
+  margin-top: 10px;
+}
+
+.osc-settings-link {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #444;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 10px;
+  transition: background 0.2s;
+}
+
+.osc-settings-link:hover {
+  background: #555;
+}
+
+button, input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.buttons button.rec {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: space-between;
+}
+
+.rotary-base {
+  position: relative;
+}
+
+.rotary-leds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.rotary-led {
+  width: 5px;
+  height: 12px;
+  background: #333;
+  border-radius: 2px;
+}
+
+.rotary-led.active {
+  background: #0f0;
+  box-shadow: 0 0 8px #0f0;
+}
+
+.rotary-knob {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #666 0%, #444 100%);
+  box-shadow: 
+    0 0 10px rgba(0,0,0,0.8),
+    inset 0 0 10px rgba(0,0,0,0.5);
+  border: 2px solid #333;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.05s linear;
+}
+
+.rotary-knob:active {
+  cursor: grabbing;
+  filter: brightness(1.1);
+}
+
+.rotary-position {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background: #FF5722;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 100;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #000;
+}
+
+.knob-indicator {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ff0000;
+  top: 10px;
+  left: 50%;
+  margin-left: -4px;
+  transform-origin: 50% calc(100% + 20px);
+  will-change: transform;
+}
+
+.knob-container::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00ff00;
+  border-radius: 50%;
+  left: 50%;
+  bottom: -20px;
+  transform: translateX(-50%);
+}
+
+@keyframes rotary-spin {
+  from { transform: rotate(-165deg); }
+  to { transform: rotate(165deg); }
+}

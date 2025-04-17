@@ -240,3 +240,67 @@ F0 00 66 58  # X-Touch header
   20         # 8-channel variant
   [DATA]    
 F7
+
+## Coding Standards, Enhancements, and Refactoring Recommendations
+
+## 1. Frontend Improvements
+
+### a. Component Modularity
+- Refactor UI controls (rotary, fader, buttons) into reusable web components or framework components.
+- Split large JS files (e.g., channel-component.js) into smaller, focused modules.
+
+### b. State Management
+- Use a centralized store for shared state (current values, OSC connection, etc.).
+- Favor declarative UI updates over direct DOM manipulation.
+
+### c. CSS & UI
+- Adopt BEM or CSS Modules for class naming.
+- Remove debug/temporary styles before production.
+- Ensure responsive layout for various screen sizes.
+
+### d. Accessibility
+- Add keyboard navigation and ARIA labels to controls.
+
+### e. Testing
+- Add unit tests (Jest/Mocha) for JS logic.
+- Add integration/UI tests (Cypress/Playwright) for user flows.
+
+## 2. OSC & Backend
+
+### a. Error Handling
+- Gracefully handle OSC/network errors in both UI and backend.
+- Provide user feedback for connection issues.
+
+### b. Logging
+- Use structured logging with configurable log levels.
+
+### c. API/Protocol Documentation
+- Auto-generate and maintain up-to-date API/OSC protocol docs.
+
+## 3. Project & Developer Experience
+
+### a. Documentation
+- Keep this devbook up to date with setup, troubleshooting, and contribution guides.
+- Document coding standards, naming conventions, and architecture.
+
+### b. Linting/Formatting
+- Add ESLint/Prettier for JS, Stylelint for CSS.
+
+### c. Build Tools
+- Use a modern bundler (Vite/Webpack/Parcel) for dev/prod builds.
+
+### d. CI/CD
+- Set up automated tests and linting on PRs (GitHub Actions, etc.).
+
+## 4. Specific Corrections
+- Refactor rotary indicator logic for correct transform-origin and rotation.
+- Remove inline debugging; use a DEBUG flag or environment variable.
+- Ensure consistent, idempotent component initialization.
+
+## 5. Future-Proofing
+- Consider TypeScript for type safety.
+- Prepare for internationalization and theming.
+
+---
+
+**Prioritize modularization, documentation, and accessibility. Refactor incrementally and update this devbook with new conventions and architecture decisions.**

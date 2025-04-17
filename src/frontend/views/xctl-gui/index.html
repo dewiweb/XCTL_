@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>X-Touch Control</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="channel-component.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="channels-container">
+      <x-channel channel="1"></x-channel>
+      <x-channel channel="2"></x-channel>
+      <x-channel channel="3"></x-channel>
+      <x-channel channel="4"></x-channel>
+      <x-channel channel="5"></x-channel>
+      <x-channel channel="6"></x-channel>
+      <x-channel channel="7"></x-channel>
+      <x-channel channel="8"></x-channel>
+    </div>
+    
+    <div id="connection-panel">
+      <a href="../osc_control.html" class="osc-settings-link" target="_blank">OSC Settings</a>
+      <div id="connection-status">Disconnected</div>
+    </div>
+  </div>
+  
+  <script type="module">
+    import OSCManager from '../components/shared/osc-manager.js';
+    
+    const osc = new OSCManager();
+    const statusElement = document.getElementById('connection-status');
+    
+    // Update status display
+    function updateStatus() {
+      if (osc.isConnected()) {
+        statusElement.textContent = 'Connected';
+        statusElement.style.color = '#4CAF50';
+      } else {
+        statusElement.textContent = 'Disconnected';
+        statusElement.style.color = '#F44336';
+      }
+    }
+    
+    // Listen for connection changes
+    osc.on('connection', updateStatus);
+    updateStatus();
+  </script>
+</body>
+</html>
