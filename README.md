@@ -49,3 +49,29 @@ python scripts/send_scribble.py --sysex "00 00 66 58..."
 - Python 3.x
 - python-rtmidi
 - Web browser for HTML tools
+
+## Launching the XCTL_ App
+
+To start the full XCTL_ application (backend API, WebSocket server, and frontend):
+
+1. **Install Python dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **(Optional) Install frontend dependencies:**
+   If you use any frontend package manager (npm/yarn), install as needed. For pure HTML/JS, skip this step.
+
+3. **Start the backend (API + WebSocket + OSC):**
+   ```bash
+   python -m src.backend.main
+   ```
+   This will launch the backend server, including OSC and WebSocket support.
+
+4. **Open the frontend:**
+   - By default, the web UI is served at [http://localhost:8000](http://localhost:8000) (or as configured).
+   - Open this address in your browser to use the XCTL_ interface.
+
+**Note:**
+- OSC and MIDI device configuration can be changed in `src/config.yaml` or via the web UI settings panel.
+- For troubleshooting, check backend logs for WebSocket and OSC connectivity.
