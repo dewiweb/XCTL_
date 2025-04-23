@@ -2,31 +2,40 @@
 <html>
 <head>
   <title>X-Touch Control</title>
-  <link rel="stylesheet" href="styles.css">
-  <script type="module" src="channel-component.js"></script>
-  <script type="module" src="main.js"></script>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script type="module" src="/static/channel-component.js"></script>
+  <script type="module" src="/static/connection-status.js"></script>
+  <script type="module" src="/static/settings-panel.js"></script>
+  <script type="module" src="/static/main.js"></script>
+
 </head>
 <body>
   <div id="app">
-    <div class="channels-container">
-      <x-channel channel="1"></x-channel>
-      <x-channel channel="2"></x-channel>
-      <x-channel channel="3"></x-channel>
-      <x-channel channel="4"></x-channel>
-      <x-channel channel="5"></x-channel>
-      <x-channel channel="6"></x-channel>
-      <x-channel channel="7"></x-channel>
-      <x-channel channel="8"></x-channel>
+    <div id="mixer-panel">
+      <div class="channels-container">
+        <x-channel channel="1"></x-channel>
+        <x-channel channel="2"></x-channel>
+        <x-channel channel="3"></x-channel>
+        <x-channel channel="4"></x-channel>
+        <x-channel channel="5"></x-channel>
+        <x-channel channel="6"></x-channel>
+        <x-channel channel="7"></x-channel>
+        <x-channel channel="8"></x-channel>
+      </div>
+      <div id="connection-panel">
+        <a href="#" class="osc-settings-link" id="show-settings">Settings</a>
+        <connection-status id="connection-status"></connection-status>
+      </div>
     </div>
-    
-    <div id="connection-panel">
-      <a href="../osc_control.html" class="osc-settings-link" target="_blank">OSC Settings</a>
-      <div id="connection-status">Disconnected</div>
+    <div id="settings-panel" style="display:none;max-width:900px;margin:0 auto;padding:0 20px;">
+      <a href="#" class="back-link" id="back-to-mixer" style="margin: 20px 0 24px 24px; display:inline-block; color:#FFD600; font-weight:bold; text-decoration:none;">&larr; Back to Mixer</a>
+      <settings-panel id="settings-panel-element"></settings-panel>
     </div>
   </div>
   
   <script type="module">
-    import OSCManager from '../components/shared/osc-manager.js';
+    import OSCManager from '/static/components/shared/osc-manager.js';
     
     const osc = new OSCManager();
     const statusElement = document.getElementById('connection-status');
@@ -46,5 +55,6 @@
     osc.on('connection', updateStatus);
     updateStatus();
   </script>
+
 </body>
 </html>

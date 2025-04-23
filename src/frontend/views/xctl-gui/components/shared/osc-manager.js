@@ -8,18 +8,26 @@ class OSCManager {
       oscInputPort: 8000
     };
     this.eventListeners = {};
-    
-    // Restore settings from sessionStorage
+
+    // Restore settings from sessionStorage or fetch from backend
     const savedSettings = sessionStorage.getItem('oscSettings');
     if (savedSettings) {
       this.settings = JSON.parse(savedSettings);
+    } else {
+      // Fetch defaults from backend
+      fetch('/api/osc-defaults')
+        .then(res => res.json())
+        .then(defaults => {
+          this.settings = { ...this.settings, ...defaults };
+        })
+        .catch(err => console.warn('Could not fetch OSC defaults from backend:', err));
     }
   }
 
   async connect() {
     console.log('Attempting OSC connection to', this.settings.oscOutputIp, 'on port', this.settings.oscOutputPort);
     return new Promise((resolve) => {
-      const socket = new WebSocket('ws://localhost:8765');
+      const socket = new WebSocket('ws://' + window.location.host + '/ws');
 
       socket.addEventListener('open', (event) => {
         console.log('WebSocket connected:', event);
@@ -73,6 +81,7 @@ class OSCManager {
   updateSettings(settings) {
     this.settings = { ...this.settings, ...settings };
     sessionStorage.setItem('oscSettings', JSON.stringify(this.settings));
+    this.emit('settings-change', this.settings);
   }
 
   isConnected() {

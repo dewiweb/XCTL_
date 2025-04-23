@@ -1,0 +1,7 @@
+python-osc>=1.8.3
+websockets>=10.0
+mido
+python-rtmidi
+fastapi
+uvicorn
+pyyaml

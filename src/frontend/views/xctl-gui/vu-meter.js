@@ -8,14 +8,13 @@ export class XVuMeter extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this._value = 0;
-    this._segments = 8;
+    this._segments = 7; // Always 7 segments
   }
 
-  static get observedAttributes() { return ['value','segments']; }
+  static get observedAttributes() { return ['value']; } // Only 'value' is observed
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'value') this.value = parseFloat(newValue);
-    if (name === 'segments') this.segments = parseInt(newValue);
   }
 
   connectedCallback() {
@@ -30,75 +29,54 @@ export class XVuMeter extends HTMLElement {
 
   get value() { return this._value; }
 
-  set segments(val) {
-    this._segments = Math.max(1, parseInt(val));
-    this.render();
-    this.updateSegments();
+  _getScaleLabels() {
+    // Always return 7 scale labels for 7 segments
+    return ['CLIP','0','-10','-20','-30','-40','-50'];
   }
-
-  get segments() { return this._segments; }
 
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        .vu-wrap {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-end;
-          justify-content: center;
-          height: 90px;
-          width: 38px;
+        .vu-grid {
+          display: grid;
+          grid-template-rows: repeat(${this._segments}, 1fr);
+          grid-template-columns: 32px 18px;
+          height: 100%;
+          min-height: 140px;
+          width: 50px;
           background: #222;
           border-radius: 6px;
           border: 1.5px solid #333;
           box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-          padding: 2px 2px 2px 4px;
+          padding: 6px 4px 6px 4px;
         }
-        .vu-scale {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: flex-end;
-          height: 76px;
-          margin-right: 4px;
-          font-size: 10px;
+        .vu-label {
+          font-size: 11px;
           color: #bbb;
           font-family: monospace;
           user-select: none;
-        }
-        .vu-meter {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-end;
-          height: 76px;
-          width: 16px;
+          align-self: center;
+          justify-self: end;
+          padding-right: 4px;
         }
         .vu-segment {
           width: 15px;
-          height: 8px;
-          margin: 1.5px 0;
+          height: 16px;
           background: #333;
           border-radius: 2px;
           transition: background 0.1s;
+          align-self: center;
+          justify-self: start;
         }
         .vu-segment.lit-green { background: #4CAF50; }
         .vu-segment.lit-orange { background: orange; }
         .vu-segment.lit-red { background: #F44336; }
       </style>
-      <div class="vu-wrap">
-        <div class="vu-scale">
-          <span>CLIP</span>
-          <span>0</span>
-          <span>-10</span>
-          <span>-20</span>
-          <span>-30</span>
-          <span>-40</span>
-          <span>-50</span>
-        </div>
-        <div class="vu-meter">
-          ${Array(this._segments).fill().map((_,i) => `<div class="vu-segment" data-seg="${i}"></div>`).join('')}
-        </div>
+      <div class="vu-grid">
+        ${this._getScaleLabels().map((label, i) => `
+          <span class="vu-label">${label}</span>
+          <div class="vu-segment" data-seg="${i}"></div>
+        `).join('')}
       </div>
     `;
   }

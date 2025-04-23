@@ -23,8 +23,8 @@ export class XFader extends HTMLElement {
           flex-direction: row;
           align-items: center;
           justify-content: center;
-          height: 160px;
-          width: 48px;
+          height: 200px;
+          width: 64px;
           background: #222;
           border-radius: 6px;
           border: 1.5px solid #333;
@@ -36,7 +36,7 @@ export class XFader extends HTMLElement {
           flex-direction: column;
           justify-content: space-between;
           align-items: flex-end;
-          height: 140px;
+          height: 180px;
           margin-right: 4px;
           font-size: 11px;
           color: #bbb;
@@ -47,8 +47,8 @@ export class XFader extends HTMLElement {
           writing-mode: bt-lr;
           -webkit-appearance: slider-vertical;
           appearance: slider-vertical;
-          width: 16px;
-          height: 140px;
+          width: 24px;
+          height: 180px;
           margin-left: 2px;
         }
       </style>

@@ -1,202 +1,125 @@
 // rotary-knob.js
 // Modular rotary knob web component for XCTL_OSC
 
-const DEBUG = false;
-
 export class RotaryKnob extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this._angle = 0;
-    this._value = 64;
-    this._controlsInitialized = false;
-    this._ledMode = 'single'; // 'single' or 'bar'
-  }
-
-  set ledMode(mode) {
-    if (mode !== 'bar' && mode !== 'single') return;
-    this._ledMode = mode;
-    this.render();
-  }
-  get ledMode() {
-    return this._ledMode;
   }
 
   connectedCallback() {
     this.render();
-    this.initControls();
-    this.initMouseControls();
+    this._onPointerDown = this._pointerDown.bind(this);
+    this.addEventListener('pointerdown', this._onPointerDown);
+    this._pushActive = false;
   }
+
+  disconnectedCallback() {
+    this.removeEventListener('pointerdown', this._onPointerDown);
+    if (this._onPointerMove) window.removeEventListener('pointermove', this._onPointerMove);
+    if (this._onPointerUp) window.removeEventListener('pointerup', this._onPointerUp);
+  }
+
+  _pointerDown(e) {
+    if (e.ctrlKey) {
+      this._pushActive = true;
+      this.dispatchEvent(new CustomEvent('rotary-push', { bubbles: true, composed: true }));
+    }
+    e.preventDefault();
+    this._dragStartY = e.clientY;
+    this._dragStartX = e.clientX;
+    this._startValue = parseInt(this.getAttribute('value') ?? '64', 10);
+    this._onPointerMove = this._pointerMove.bind(this);
+    this._onPointerUp = this._pointerUp.bind(this);
+    window.addEventListener('pointermove', this._onPointerMove);
+    window.addEventListener('pointerup', this._onPointerUp);
+    this.setPointerCapture && this.setPointerCapture(e.pointerId);
+    this.render();
+  }
+
+  _pointerMove(e) {
+    const deltaY = this._dragStartY - e.clientY;
+    const deltaX = e.clientX - this._dragStartX;
+    // Use the greater movement axis, but allow both directions
+    const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
+    let newValue = this._startValue + Math.round(delta / 2); // Adjust sensitivity
+    newValue = Math.max(0, Math.min(127, newValue));
+    if (newValue !== this._lastValue) {
+      this.setAttribute('value', newValue);
+      this.render();
+      this.dispatchEvent(new CustomEvent('rotary-change', { detail: { value: newValue } }));
+      this._lastValue = newValue;
+    }
+  }
+
+  _pointerUp(e) {
+    window.removeEventListener('pointermove', this._onPointerMove);
+    window.removeEventListener('pointerup', this._onPointerUp);
+    this.releasePointerCapture && this.releasePointerCapture(e.pointerId);
+    this._pushActive = false;
+    this.render();
+  }
+
+  static get observedAttributes() { return ['value', 'leds']; }
+  attributeChangedCallback() { this.render(); }
 
   render() {
-    const tickCount = 13;
-    const startAngle = -165;
-    const endAngle = 165;
-    let litTicks;
-    if (this._ledMode === 'bar') {
-      litTicks = Math.round((this._value / 127) * (tickCount - 1));
-    } else {
-      litTicks = Math.round((this._value / 127) * (tickCount - 1));
-    }
-    const ticks = Array.from({ length: tickCount }).map((_, i) => {
-      const angle = startAngle + (i * (endAngle - startAngle) / (tickCount - 1));
-      let lit = false;
-      if (this._ledMode === 'bar') {
-        lit = i <= litTicks;
+    // Get value and number of ticks (leds) from attributes, with defaults
+    const value = parseInt(this.getAttribute('value') ?? '64', 10);
+    const leds = parseInt(this.getAttribute('leds') ?? '13', 10);
+    const min = 0, max = 127;
+    const angleStart = -135; // degrees
+    const angleEnd = 135; // degrees
+    const cx = 24, cy = 24, r = 20, tickR = 22;
+    // Calculate angle for the pointer
+    const valueNorm = (value - min) / (max - min);
+    const pointerAngle = angleStart + valueNorm * (angleEnd - angleStart);
+    // Determine tick mode from param attribute
+    const param = (this.getAttribute('param') || '').toLowerCase();
+    // Single-tick mode for pan, position, or x; multi-tick otherwise
+    const singleTickParams = ['pan', 'position', 'x', 'pos', 'azimuth'];
+    const singleTick = singleTickParams.some(p => param.includes(p));
+    // Calculate which tick should be the last lit one
+    const litIndex = Math.round(valueNorm * (leds - 1));
+    // Choose color based on push mode
+    const litColor = this._pushActive ? '#f00' : '#0f0';
+    let ticks = '';
+    for (let i = 0; i < leds; ++i) {
+      const frac = leds === 1 ? 0.5 : i / (leds - 1);
+      const a = angleStart + frac * (angleEnd - angleStart);
+      const rad = (a - 90) * Math.PI / 180;
+      const x1 = cx + tickR * Math.cos(rad);
+      const y1 = cy + tickR * Math.sin(rad);
+      const x2 = cx + (tickR + 4) * Math.cos(rad);
+      const y2 = cy + (tickR + 4) * Math.sin(rad);
+      let color;
+      if (singleTick) {
+        color = i === litIndex ? litColor : '#333';
       } else {
-        lit = i === litTicks;
+        color = i <= litIndex ? litColor : '#333';
       }
-      return `<div class="knob-tick${lit ? ' lit' : ''}" style="transform: rotate(${angle}deg) translateY(-50%);"></div>`;
-    }).join('');
+      ticks += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${color}" stroke-width="2" />`;
+    }
+    // Pointer
+    const pointerRad = (pointerAngle - 90) * Math.PI / 180;
+    const px = cx + (r - 7) * Math.cos(pointerRad);
+    const py = cy + (r - 7) * Math.sin(pointerRad);
+    const pointerColor = this._pushActive ? '#f00' : '#0f0';
     this.shadowRoot.innerHTML = `
       <style>
-        .rotary-knob-bg {
-          position: relative;
-          width: 56px;
-          height: 56px;
-          border-radius: 50%;
-          background: radial-gradient(ellipse at 60% 35%, #444 60%, #222 100%);
-          box-shadow: 0 0 0 2px #222, 0 2px 8px rgba(0,0,0,0.18);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .knob-center {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 100%;
-          height: 100%;
-          transform: translate(-50%, -50%);
-          pointer-events: none;
-        }
-        .knob-inner {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: radial-gradient(ellipse at 60% 35%, #222 60%, #111 100%);
-          box-shadow: 0 0 8px #000a, 0 0 0 2px #333;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 2;
-        }
-        .knob-dimple {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: #181818;
-          box-shadow: 0 1px 3px #000a inset;
-          position: absolute;
-          left: 50%;
-          top: 54%;
-          transform: translate(-50%, -50%);
-          border: 1px solid #333;
-        }
-        .knob-ring {
-          position: absolute;
-          width: 50px;
-          height: 50px;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%,-50%);
-          border-radius: 50%;
-          border: 2px solid #444;
-          box-sizing: border-box;
-          z-index: 1;
-        }
-        .knob-tick {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 16px;
-          height: 7px;
-          background: #2a2320;
-          border-radius: 5px;
-          transform-origin: 50% 100%;
-          opacity: 0.25;
-          transition: background 0.1s, opacity 0.1s;
-          z-index: 3;
-          pointer-events: none;
-        }
-        .knob-tick.lit {
-          background: linear-gradient(90deg, #ff6a00 0%, #ffb400 100%);
-          box-shadow: 0 0 6px 2px #ff6a0088;
-          opacity: 0.95;
+        .rotary-svg {
+          display: block;
+          width: 48px;
+          height: 48px;
         }
       </style>
-      <div class="rotary-knob-bg" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="127" aria-valuenow="${this._value}" aria-label="Rotary Encoder">
-        <div class="knob-center">${ticks}</div>
-        <div class="knob-ring"></div>
-        <div class="knob-inner">
-          <div class="knob-dimple"></div>
-        </div>
-      </div>
+      <svg class="rotary-svg" width="48" height="48">
+        <circle cx="24" cy="24" r="20" fill="#222" stroke="#444" stroke-width="4" />
+        ${ticks}
+        <circle cx="24" cy="24" r="13" fill="#444" />
+        <line x1="24" y1="24" x2="${px.toFixed(2)}" y2="${py.toFixed(2)}" stroke="${pointerColor}" stroke-width="4" stroke-linecap="round" />
+      </svg>
     `;
-  }
-
-  set value(val) {
-    this._value = val;
-    this.render();
-    const knob = this.shadowRoot.querySelector('.rotary-knob-bg');
-    if (knob) knob.setAttribute('aria-valuenow', val);
-    if (DEBUG) console.log('Dispatch rotary-change event with value:', val);
-    this.dispatchEvent(new CustomEvent('rotary-change', {
-      detail: { value: val }
-    }));
-  }
-
-  get value() {
-    return this._value;
-  }
-
-  updateIndicatorPosition(angle) {
-    // No-op: indicator removed, ticks are the indicator
-  }
-
-  initControls() {
-    if (this._controlsInitialized) return;
-    this._controlsInitialized = true;
-  }
-
-  initMouseControls() {
-    const knob = this.shadowRoot.querySelector('.rotary-knob-bg');
-    if (!knob) {
-      if (DEBUG) console.error('Knob element not found!');
-      return;
-    }
-    let isDragging = false;
-    let startAngle = 0;
-    let currentAngle = 0;
-    let centerX, centerY;
-
-    knob.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      const rect = knob.getBoundingClientRect();
-      centerX = rect.left + rect.width/2;
-      centerY = rect.top + rect.height/2;
-      startAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * 180/Math.PI;
-      document.body.style.userSelect = 'none';
-      e.preventDefault();
-    });
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - centerX;
-      const dy = e.clientY - centerY;
-      let angle = Math.atan2(dy, dx) * 180/Math.PI;
-      angle = Math.max(-165, Math.min(165, angle));
-      currentAngle = angle;
-      const value = Math.round(((currentAngle + 165) / 330) * 127);
-      this.value = value;
-    });
-    window.addEventListener('mouseup', () => {
-      isDragging = false;
-      document.body.style.userSelect = '';
-    });
   }
 }
 

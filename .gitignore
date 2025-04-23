@@ -1,0 +1,30 @@
+# Python virtual environments
+venv/
+.env/
+ENV/
+.venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if any JS tooling)
+node_modules/
+
+# Logs
+*.log
+
+# Other
+*.swp
+*.swo

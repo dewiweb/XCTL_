@@ -54,10 +54,6 @@ body {
   background: #555;
 }
 
-.buttons button.active {
-  background-color: #ff0000;
-  color: white;
-}
 
 /* VU Meter */
 .vu-meter {
@@ -119,18 +115,17 @@ body {
 }
 
 .btn-vu-section {
-  width: 100%;
-  min-width: 0;
-  background: #544b1c;
-  border-radius: 8px;
-  border: 1.5px solid #b2a14a;
+  height: 140px;
+  align-items: stretch;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   gap: 14px;
   padding: 8px 4px 8px 4px;
   margin-bottom: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  border-radius: 8px;
+  border: 1.5px solid #b2a14a;
+  background: #544b1c;
 }
 
 .x-vu-meter {
@@ -446,9 +441,12 @@ body {
 }
 
 button, input[type="range"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  -webkit-writing-mode: vertical-lr;
+  -webkit-direction: rtl;
+  -moz-writing-mode: vertical-lr;
+  -moz-direction: rtl;
 }
 
 .buttons button.rec {

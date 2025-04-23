@@ -303,4 +303,236 @@ F7
 
 ---
 
+# Bridge Core Internal Architecture
+
+## Overview
+The Bridge Core is responsible for translating and routing messages between the X-Touch hardware (MIDI), OSC clients (DAWs), and the Web UI (WebSocket). It ensures bidirectional, low-latency, and reliable communication.
+
+### Internal Message Flow Diagram
+```mermaid
+graph TD
+    XT[X-Touch MIDI] -- MIDI Msg --> MC(MIDI Controller)
+    MC -- Event --> EC(Event Core)
+    OSC[OSC Client] -- OSC Msg --> OC(OSC Controller)
+    OC -- Event --> EC
+    WEB[Web UI] -- WS Msg --> WC(WebSocket Controller)
+    WC -- Event --> EC
+    EC -- Update --> MC
+    EC -- Update --> OC
+    EC -- Update --> WC
+```
+
+### Pseudocode: Main Event Loop
+```python
+while running:
+    for msg in midi_controller.poll():
+        event_core.handle_midi(msg)
+    for msg in osc_controller.poll():
+        event_core.handle_osc(msg)
+    for msg in websocket_controller.poll():
+        event_core.handle_ws(msg)
+    event_core.dispatch_updates()
+```
+
+---
+
+# WebSocket Protocol
+
+## Message Types
+- `fader_move`: Fader moved on X-Touch or UI
+- `button_press`: Button pressed
+- `scribble_update`: Scribble strip text/color change
+- `vu_update`: VU meter level
+- `preset_change`: Switch mapping preset
+- `config_update`: Update bridge configuration
+- `error`: Error/diagnostic message
+
+## Example Payloads
+```json
+{
+  "event": "fader_move",
+  "channel": 2,
+  "value": 0.63,
+  "osc_mapping": "/live/volume"
+}
+
+{
+  "event": "error",
+  "message": "OSC connection lost",
+  "severity": "warning"
+}
+```
+
+---
+
+# Example Mapping Files
+
+## YAML Mapping Example
+```yaml
+presets:
+  ableton:
+    mappings:
+      - midi: fader1
+        osc: /live/volume
+        range: [0.0, 1.0]
+      - midi: button_rec
+        osc: /live/record
+        type: bool
+
+  reaper:
+    mappings:
+      - midi: fader1
+        osc: /track/volume
+        range: [0.0, 1.0]
+```
+
+## Creating a New Preset
+1. Copy an existing preset block.
+2. Change the preset name and OSC addresses as needed.
+3. Save and reload bridge (or use Web UI if supported).
+
+---
+
+# Error Handling & Diagnostics
+
+- All controllers (MIDI, OSC, WS) log errors with timestamps and severity.
+- The Web UI displays connection and mapping errors in real time.
+- Diagnostic commands available via WebSocket (e.g., `ping`, `dump_state`).
+- Use verbose logging for troubleshooting: enable with a config flag or UI toggle.
+- Typical troubleshooting steps:
+  1. Check hardware and cable connections
+  2. Verify OSC/WS IPs and ports
+  3. Use Web UI diagnostics tab for live status
+  4. Inspect logs for errors or dropped messages
+
+---
+
+# Known Limitations & Future Plans
+
+## Current Limitations
+- RTP-MIDI support may require manual setup
+- Some DAW-specific features may not be mapped by default
+- Web UI authentication is basic (improve security for remote use)
+- No plugin system for custom logic yet
+
+## Mapping Layers & Mode Switching via Control Combos
+
+To expand the capabilities of the X-Touch control surface, the mapping system supports multiple "layers" or "modes" that can be recalled using specific button combinations (combos) on the hardware. For example, pressing Channel 1 REC and Channel 8 REC simultaneously can activate a new mapping layer, effectively multiplying the available controls.
+
+### How It Works
+- Each mapping layer defines a different set of MIDI-to-OSC and OSC-to-MIDI assignments.
+- Layer switching is triggered by user-defined combos (e.g., specific button or button+encoder presses).
+- The active mapping layer determines how incoming MIDI/OSC messages are routed.
+- Layer state is reflected in the Web UI and can be visualized for clarity.
+
+### Example YAML Mapping with Layers
+```yaml
+presets:
+  ableton:
+    layers:
+      default:
+        mappings:
+          - midi: fader1
+            osc: /live/volume
+          - midi: button_rec
+            osc: /live/record
+      alt_layer:
+        trigger_combo:
+          - channel: 1
+            control: rec
+          - channel: 8
+            control: rec
+        mappings:
+          - midi: fader1
+            osc: /live/sendA
+          - midi: button_rec
+            osc: /live/clip/launch
+```
+
+### Logic
+- When the specified combo (e.g., Channel 1 REC + Channel 8 REC) is detected, the `alt_layer` mappings become active.
+- Releasing the combo (or pressing another defined combo) returns to the `default` layer or switches to another layer.
+- This allows for context-sensitive control, macro layers, and more advanced workflows.
+
+### Benefits
+- Greatly expands the number of controls without additional hardware.
+- Enables user-defined workflows and DAW-specific optimizations.
+- Can be extended to support more complex combos, timed presses, or sequences.
+
+---
+
+### Two-Step Layer Selection (Combo + Choice)
+
+To make the layer selection more user-friendly and powerful, the system can support a two-step process:
+
+1. **Combo Activation**: User presses a defined button combo (e.g., Channel 1 REC + Channel 8 REC).
+2. **Layer Choice Prompt**: The system updates X-Touch scribble strips to present available layer options (e.g., "Tracks 9-16", "EQ", "Compressor", "Gate"). The user then confirms the desired layer by pressing an additional control (e.g., a select button on the channel strip).
+
+This approach allows for context-sensitive, dynamic assignment of layers, and provides clear visual feedback to the user.
+
+#### Example YAML Mapping for Two-Step Layer Selection
+```yaml
+presets:
+  ableton:
+    layers:
+      default:
+        mappings:
+          - midi: fader1
+            osc: /live/volume
+      layer_chooser:
+        trigger_combo:
+          - channel: 1
+            control: rec
+          - channel: 8
+            control: rec
+        choices:
+          - id: tracks_9_16
+            label: "Tracks 9-16"
+            select_button: 1  # Channel 1 select
+          - id: eq
+            label: "EQ"
+            select_button: 2  # Channel 2 select
+          - id: compressor
+            label: "Compressor"
+            select_button: 3  # Channel 3 select
+        # No direct mappings; this layer only presents choices
+      tracks_9_16:
+        parent: layer_chooser
+        mappings:
+          - midi: fader1
+            osc: /live/track/9/volume
+      eq:
+        parent: layer_chooser
+        mappings:
+          - midi: rotary1
+            osc: /live/track/selected/eq/gain
+      compressor:
+        parent: layer_chooser
+        mappings:
+          - midi: rotary1
+            osc: /live/track/selected/compressor/threshold
+```
+
+#### Logic
+- When the combo is pressed, the system enters the `layer_chooser` state and updates scribble strips with the options' labels (e.g., "Tracks 9-16", "EQ", "Compressor").
+- The user confirms their choice by pressing the corresponding select button.
+- The selected layer (`tracks_9_16`, `eq`, or `compressor`) becomes active, and its mappings are used until another combo/layer change.
+- Optionally, the system can display the current layer on the scribble strips for ongoing feedback.
+
+#### Benefits
+- Reduces accidental layer switching by requiring explicit confirmation.
+- Makes advanced workflows discoverable and user-friendly.
+- Allows for more than two or three layers without memorizing complex combos.
+
+---
+
+## Future Plans
+- Add plugin API for custom mappings and behaviors
+- Improve Web UI for drag-and-drop mapping
+- Add support for more OSC-enabled software
+- Enhance diagnostics (traffic monitor, message inspector)
+- Expand documentation and add video tutorials
+
+---
+
 **Prioritize modularization, documentation, and accessibility. Refactor incrementally and update this devbook with new conventions and architecture decisions.**

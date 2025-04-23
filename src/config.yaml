@@ -1,0 +1,15 @@
+osc:
+  input_port: 9000
+  output_port: 12000
+  output_ip: "192.168.0.15"
+
+midi:
+  input_port: 0
+  output_port: 1
+
+fastapi:
+  port: 8000
+
+logging:
+  level: "INFO"
+  file: null
