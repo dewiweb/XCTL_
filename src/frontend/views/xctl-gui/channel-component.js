@@ -109,6 +109,15 @@ export class ChannelComponent extends HTMLElement {
     this.shadowRoot.querySelector('rotary-knob').addEventListener('rotary-change', (e) => {
       this.value = e.detail.value;
       this.shadowRoot.querySelector('x-fader').value = this.value;
+      // Send ui_event for rotary knob
+      if (window.xctlSocket && window.xctlSocket.readyState === WebSocket.OPEN) {
+        window.xctlSocket.send(JSON.stringify({
+          type: 'ui_event',
+          control: 'knob',
+          channel: this.channelNumber,
+          value: this.value
+        }));
+      }
       this.dispatchEvent(new CustomEvent('fader-change', {
         detail: {
           channel: this.channelNumber,
@@ -121,6 +130,15 @@ export class ChannelComponent extends HTMLElement {
     this.shadowRoot.querySelector('x-fader').addEventListener('fader-change', (e) => {
       this.value = e.detail.value;
       this.shadowRoot.querySelector('rotary-knob').value = this.value;
+      // Send ui_event for fader
+      if (window.xctlSocket && window.xctlSocket.readyState === WebSocket.OPEN) {
+        window.xctlSocket.send(JSON.stringify({
+          type: 'ui_event',
+          control: 'fader',
+          channel: this.channelNumber,
+          value: this.value
+        }));
+      }
       this.dispatchEvent(new CustomEvent('fader-change', {
         detail: {
           channel: this.channelNumber,
@@ -134,6 +152,16 @@ export class ChannelComponent extends HTMLElement {
       this.dispatchEvent(new CustomEvent('button-change', {
         detail: { channel: this.channelNumber, ...e.detail }
       }));
+      // Send ui_event for button
+      if (window.xctlSocket && window.xctlSocket.readyState === WebSocket.OPEN) {
+        window.xctlSocket.send(JSON.stringify({
+          type: 'ui_event',
+          control: 'button',
+          channel: this.channelNumber,
+          name: e.detail.button,
+          value: e.detail.value
+        }));
+      }
     });
 
     // Listen for scribble-change events from the scribble-strip
