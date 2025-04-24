@@ -6,8 +6,10 @@
   <link rel="stylesheet" href="/static/styles.css">
   <script type="module" src="/static/channel-component.js"></script>
   <script type="module" src="/static/connection-status.js"></script>
-  <script type="module" src="/static/settings-panel.js"></script>
+
+  <script type="module" src="/static/midi-settings-panel.js"></script>
   <script type="module" src="/static/main.js"></script>
+  <script type="module" src="/static/mapping-editor.js"></script>
 
 </head>
 <body>
@@ -24,13 +26,23 @@
         <x-channel channel="8"></x-channel>
       </div>
       <div id="connection-panel">
-        <a href="#" class="osc-settings-link" id="show-settings">Settings</a>
+        <a href="#" class="osc-settings-link" id="show-settings">OSC/Network Settings</a>
+        <a href="#" class="osc-settings-link" id="show-midi-settings" style="margin-left:20px;">MIDI Settings</a>
+        <a href="#" class="osc-settings-link" id="show-mapping-editor" style="margin-left:20px; color:#4CAF50;">Mapping Editor</a>
         <connection-status id="connection-status"></connection-status>
       </div>
     </div>
     <div id="settings-panel" style="display:none;max-width:900px;margin:0 auto;padding:0 20px;">
       <a href="#" class="back-link" id="back-to-mixer" style="margin: 20px 0 24px 24px; display:inline-block; color:#FFD600; font-weight:bold; text-decoration:none;">&larr; Back to Mixer</a>
-      <settings-panel id="settings-panel-element"></settings-panel>
+      <osc-settings-panel id="osc-settings-panel-element"></osc-settings-panel>
+    </div>
+    <div id="mapping-editor-panel" style="display:none;max-width:900px;margin:0 auto;padding:0 20px;">
+      <a href="#" class="back-link" id="back-to-mixer-mapping" style="margin: 20px 0 24px 24px; display:inline-block; color:#4CAF50; font-weight:bold; text-decoration:none;">&larr; Back to Mixer</a>
+      <mapping-editor></mapping-editor>
+    </div>
+    <div id="midi-settings-panel" style="display:none;max-width:900px;margin:0 auto;padding:0 20px;">
+      <a href="#" class="back-link" id="back-to-mixer-midi" style="margin: 20px 0 24px 24px; display:inline-block; color:#FFD600; font-weight:bold; text-decoration:none;">&larr; Back to Mixer</a>
+      <midi-settings-panel id="midi-settings-panel-element"></midi-settings-panel>
     </div>
   </div>
   

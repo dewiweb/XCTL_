@@ -44,9 +44,8 @@ export class XFader extends HTMLElement {
           user-select: none;
         }
         .fader-slider {
-          writing-mode: bt-lr;
-          -webkit-appearance: slider-vertical;
-          appearance: slider-vertical;
+          writing-mode: vertical-lr;
+          direction: rtl;
           width: 24px;
           height: 180px;
           margin-left: 2px;

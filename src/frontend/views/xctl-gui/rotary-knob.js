@@ -7,6 +7,15 @@ export class RotaryKnob extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
+  // Value property setter/getter for programmatic updates
+  set value(val) {
+    this.setAttribute('value', val);
+    this.render();
+  }
+  get value() {
+    return parseInt(this.getAttribute('value') ?? '64', 10);
+  }
+
   connectedCallback() {
     this.render();
     this._onPointerDown = this._pointerDown.bind(this);

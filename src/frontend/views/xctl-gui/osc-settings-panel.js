@@ -1,7 +1,7 @@
-// settings-panel.js
+// osc-settings-panel.js
 // Custom element for OSC/WebSocket settings UI
 
-class SettingsPanel extends HTMLElement {
+class OSCSettingsPanel extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -47,7 +47,7 @@ class SettingsPanel extends HTMLElement {
         input { background: rgba(30,30,34,0.98); border: 1.5px solid #444; border-radius: 9px; color: #fff; font-size: 1.12em; padding: 18px 14px 8px 14px; outline: none; width: 100%; margin-bottom: 12px; }
         button { background: linear-gradient(90deg,#ffd600 60%,#fff700 100%); color: #232323; font-weight: 700; border: none; border-radius: 9px; padding: 13px 44px; font-size: 1.09em; cursor: pointer; box-shadow: 0 2px 16px #ffd60022; letter-spacing: 0.6px; transition: background 0.2s, color 0.2s; }
       </style>
-      <div class="settings-header">Settings</div>
+      <div class="settings-header">OSC/Network Settings</div>
       <div class="settings-section">
         <label for="osc-output-ip">OSC Output IP</label>
         <input id="osc-output-ip" type="text" value="${this.oscOutputIp}" placeholder="OSC Output IP" />
@@ -70,11 +70,9 @@ class SettingsPanel extends HTMLElement {
     const btn = this.shadowRoot.querySelector('#connect-btn');
     if (btn) {
       btn.onclick = () => {
-        console.log('[SettingsPanel] Connect button clicked');
         const oscOutputIp = this.shadowRoot.querySelector('#osc-output-ip').value;
         const oscOutputPort = parseInt(this.shadowRoot.querySelector('#osc-output-port').value);
         const oscInputPort = parseInt(this.shadowRoot.querySelector('#osc-input-port').value);
-        console.log('[SettingsPanel] Saving values:', { oscOutputIp, oscOutputPort, oscInputPort });
         if (window.osc) {
           window.osc.updateSettings({ oscOutputIp, oscOutputPort, oscInputPort });
         }
@@ -88,13 +86,11 @@ class SettingsPanel extends HTMLElement {
         btn.style.setProperty('background', 'linear-gradient(90deg,#4CAF50 60%,#43e97b 100%)', 'important');
         btn.style.setProperty('color', '#fff', 'important');
         btn.style.setProperty('transition', 'background 0.2s, color 0.2s', 'important');
-        console.log('[SettingsPanel] Visual feedback applied (Saved!)');
         setTimeout(() => {
           btn.textContent = originalText;
           btn.style.removeProperty('background');
           btn.style.removeProperty('color');
           btn.style.removeProperty('transition');
-          console.log('[SettingsPanel] Visual feedback reverted');
           this.setSettings({ oscOutputIp, oscOutputPort, oscInputPort });
         }, 1500);
       };
@@ -102,6 +98,6 @@ class SettingsPanel extends HTMLElement {
   }
 }
 
-customElements.define('settings-panel', SettingsPanel);
+customElements.define('osc-settings-panel', OSCSettingsPanel);
 
-export default SettingsPanel;
+export default OSCSettingsPanel;

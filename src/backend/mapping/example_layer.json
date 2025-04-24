@@ -1,0 +1,7 @@
+{
+  "fader_1": {"midi_cc": 87, "osc": "/channel/1/fader"},
+  "knob_1": {"midi_cc": 88, "osc": "/channel/1/knob"},
+  "mute_1": {"midi_note": 60, "osc": "/channel/1/mute"},
+  "solo_1": {"midi_note": 61, "osc": "/channel/1/solo"},
+  "fader_2": {"midi_cc": 89, "osc": "/channel/2/fader"}
+}
