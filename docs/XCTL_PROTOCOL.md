@@ -277,7 +277,11 @@ See [XCTL_LED_RING_MAPPINGS.md](XCTL_LED_RING_MAPPINGS.md) for complete control 
 ### SCRIBBLE STRIP Section (Ch 1-8)
 
 **Message Format Notes:**
-- All MIDI SysEx messages omit the required starting F0 and ending F7
+- **Important:** The header shown below (`00 00 66 58`) is *not* the official Behringer X-Touch SysEx header. The standard header for X-Touch scribble strips, as used in Aldaviva/BehringerXTouchExtender and other open source projects, is:
+  - `F0 00 20 32 15 4C <channel> <color> <top text> <bottom text> F7`
+- For maximum compatibility with X-Touch hardware, use the standard header above. The `00 00 66 58` header may be specific to XR16/X-AIR devices or legacy implementations.
+- For a detailed open source implementation and protocol reference, see: [Aldaviva/BehringerXTouchExtender](https://github.com/Aldaviva/BehringerXTouchExtender) and its [Scribble strips wiki page](https://github.com/Aldaviva/BehringerXTouchExtender/wiki/Scribble-strips).
+- All MIDI SysEx messages omit the required starting F0 and ending F7 in pure XCTL mode (unless otherwise noted)
 - Example below sets Scribble strip 1 (Channel 20h) to:
   - Line 1: Centered "Ch 1" (bright font on dark background)
   - Line 2: Right-aligned "aB3" (dark font on bright background)
