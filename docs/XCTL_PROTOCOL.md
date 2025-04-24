@@ -304,6 +304,58 @@ See [XCTL_LED_RING_MAPPINGS.md](XCTL_LED_RING_MAPPINGS.md) for complete control 
 
 *Note: 00h centers text, 20h works as non-breakable space*
 
+---
+
+### Color Byte Encoding Explained
+
+The color byte for X-Touch scribble strips is constructed as follows (matching both this documentation and the Aldaviva/BehringerXTouchExtender implementation):
+
+```
+colorByte = background | (upperColor << 4) | (lowerColor << 5) | (inverted << 6)
+```
+- **background**: 0–7 (Black, Red, Green, Yellow, Blue, Magenta, Cyan, White)
+- **upperColor**: 0 = Light, 1 = Dark (top text)
+- **lowerColor**: 0 = Light, 1 = Dark (bottom text)
+- **inverted**: 0 = Normal, 1 = Inverted (for inverted line 2, add 0x40)
+
+| Background | upperColor | lowerColor | Inverted | colorByte (hex) | Meaning                  |
+|------------|------------|------------|----------|-----------------|--------------------------|
+| 0 (Black)  | 0 (Light)  | 0 (Light)  | 0        | 0x00            | Black bg, both light     |
+| 1 (Red)    | 0 (Light)  | 0 (Light)  | 0        | 0x01            | Red bg, both light       |
+| 2 (Green)  | 0 (Light)  | 0 (Light)  | 0        | 0x02            | Green bg, both light     |
+| 3 (Yellow) | 0 (Light)  | 0 (Light)  | 0        | 0x03            | Yellow bg, both light    |
+| 4 (Blue)   | 0 (Light)  | 0 (Light)  | 0        | 0x04            | Blue bg, both light      |
+| 5 (Magenta)| 0 (Light)  | 0 (Light)  | 0        | 0x05            | Magenta bg, both light   |
+| 6 (Cyan)   | 0 (Light)  | 0 (Light)  | 0        | 0x06            | Cyan bg, both light      |
+| 7 (White)  | 0 (Light)  | 0 (Light)  | 0        | 0x07            | White bg, both light     |
+| 0 (Black)  | 1 (Dark)   | 0 (Light)  | 0        | 0x10            | Black bg, dark upper     |
+| 0 (Black)  | 0 (Light)  | 1 (Dark)   | 0        | 0x20            | Black bg, dark lower     |
+| 0 (Black)  | 1 (Dark)   | 1 (Dark)   | 0        | 0x30            | Black bg, both dark      |
+| 1 (Red)    | 1 (Dark)   | 1 (Dark)   | 0        | 0x31            | Red bg, both dark        |
+| ...        | ...        | ...        | ...      | ...             | ...                      |
+| 1 (Red)    | 0 (Light)  | 0 (Light)  | 1        | 0x41            | Red bg, both light, inverted |
+| 2 (Green)  | 1 (Dark)   | 1 (Dark)   | 1        | 0x72            | Green bg, both dark, inverted |
+| ...        | ...        | ...        | ...      | ...             | ...                      |
+
+To get the "inverted" line 2 values (as in the table above), just add 0x40 to the base color byte.
+
+**Example Calculation:**
+- Magenta background, light upper, dark lower, not inverted:
+  - background = 5 (0x05)
+  - upperColor = 0 (light)
+  - lowerColor = 1 (dark)
+  - inverted = 0
+  - `colorByte = 5 | (0 << 4) | (1 << 5) | (0 << 6) = 0x25`
+
+- Red background, both dark, inverted:
+  - background = 1 (0x01)
+  - upperColor = 1 (dark)
+  - lowerColor = 1 (dark)
+  - inverted = 1
+  - `colorByte = 1 | (1 << 4) | (1 << 5) | (1 << 6) = 0x71`
+
+This scheme ensures compatibility with both open source and device implementations.
+
 ### LCD 7-Segment Displays
 See [XCTL_LCD_7SEGMENT.md](XCTL_LCD_7SEGMENT.md) for complete segment mappings and display controls.
 
