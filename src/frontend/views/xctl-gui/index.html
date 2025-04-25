@@ -10,7 +10,6 @@
   <script type="module" src="/static/midi-settings-panel.js"></script>
   <script type="module" src="/static/main.js"></script>
   <script type="module" src="/static/mapping-editor.js"></script>
-
 </head>
 <body>
   <div id="app">
@@ -31,6 +30,7 @@
         <a href="#" class="osc-settings-link" id="show-mapping-editor" style="margin-left:20px; color:#4CAF50;">Mapping Editor</a>
         <connection-status id="connection-status"></connection-status>
       </div>
+      <layer-status-panel></layer-status-panel>
     </div>
     <div id="settings-panel" style="display:none;max-width:900px;margin:0 auto;padding:0 20px;">
       <a href="#" class="back-link" id="back-to-mixer" style="margin: 20px 0 24px 24px; display:inline-block; color:#FFD600; font-weight:bold; text-decoration:none;">&larr; Back to Mixer</a>
@@ -46,6 +46,7 @@
     </div>
   </div>
   
+  <script type="module" src="/static/layer-status-panel.js"></script>
   <script type="module">
     import OSCManager from '/static/components/shared/osc-manager.js';
     

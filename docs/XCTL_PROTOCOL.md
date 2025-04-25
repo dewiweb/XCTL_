@@ -146,6 +146,17 @@ All controls follow these principles (exceptions noted):
 | SELECT/SIG | 24-31 | GREEN | |
 | FLIP | 50 | ORANGE | |
 
+> **Note:**
+> 
+> Based on direct testing with the X-Touch Extender hardware, the following note-to-button mapping was observed:
+> - Notes **8–15**: Rec buttons
+> - Notes **16–23**: Solo buttons
+> - Notes **24–31**: Mute buttons
+> - Notes **32–37**: Select buttons
+> - Notes **0–7** and **38–50**: No button response (not mapped to physical buttons)
+>
+> This may differ from the official chart above, and is provided for reference when working with the X-Touch Extender specifically.
+
 ### FADER Section (Ch 1-8 + MAIN)
 
 **Setting Motor (Outbound - Green)**

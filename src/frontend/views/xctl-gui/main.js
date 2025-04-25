@@ -153,6 +153,10 @@ function connectWebSocket(urls = getWebSocketURLs(), attempt = 0) {
     console.log("WebSocket MESSAGE", msg.data);
     try {
       const data = JSON.parse(msg.data);
+      if (data.type === 'layer_change') {
+        console.log('[DEBUG] Dispatching xctl-layer-change:', data);
+        window.dispatchEvent(new CustomEvent('xctl-layer-change', { detail: data }));
+      }
 
       // --- Centralized Mapping-based UI Update Function ---
       function updateUIFromMapping({type, payload}) {

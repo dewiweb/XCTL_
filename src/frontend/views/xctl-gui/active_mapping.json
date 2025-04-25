@@ -1,386 +1,397 @@
 {
-  "fader_1": {
-    "midi_cc": 70,
-    "osc": "/channel/1/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
+  "layer_1": {
+    "name": "Main",
+    "mappings": {
+      "fader_1": {
+        "midi_cc": 70,
+        "osc": "/channel/1/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_1": {
+        "midi_cc": 80,
+        "osc": "/channel/1/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_1": {
+        "midi_note": 8,
+        "osc": "/channel/1/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_1": {
+        "midi_note": 16,
+        "osc": "/channel/1/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_1": {
+        "midi_note": 24,
+        "osc": "/channel/1/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_1": {
+        "midi_note": 32,
+        "osc": "/channel/1/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_2": {
+        "midi_cc": 71,
+        "osc": "/channel/2/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_2": {
+        "midi_cc": 81,
+        "osc": "/channel/2/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_2": {
+        "midi_note": 9,
+        "osc": "/channel/2/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_2": {
+        "midi_note": 17,
+        "osc": "/channel/2/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_2": {
+        "midi_note": 25,
+        "osc": "/channel/2/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_2": {
+        "midi_note": 33,
+        "osc": "/channel/2/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_3": {
+        "midi_cc": 72,
+        "osc": "/channel/3/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_3": {
+        "midi_cc": 82,
+        "osc": "/channel/3/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_3": {
+        "midi_note": 10,
+        "osc": "/channel/3/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_3": {
+        "midi_note": 18,
+        "osc": "/channel/3/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_3": {
+        "midi_note": 26,
+        "osc": "/channel/3/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_3": {
+        "midi_note": 34,
+        "osc": "/channel/3/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_4": {
+        "midi_cc": 73,
+        "osc": "/channel/4/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_4": {
+        "midi_cc": 83,
+        "osc": "/channel/4/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_4": {
+        "midi_note": 11,
+        "osc": "/channel/4/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_4": {
+        "midi_note": 19,
+        "osc": "/channel/4/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_4": {
+        "midi_note": 27,
+        "osc": "/channel/4/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_4": {
+        "midi_note": 35,
+        "osc": "/channel/4/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_5": {
+        "midi_cc": 74,
+        "osc": "/channel/5/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_5": {
+        "midi_cc": 84,
+        "osc": "/channel/5/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_5": {
+        "midi_note": 12,
+        "osc": "/channel/5/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_5": {
+        "midi_note": 20,
+        "osc": "/channel/5/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_5": {
+        "midi_note": 28,
+        "osc": "/channel/5/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_5": {
+        "midi_note": 36,
+        "osc": "/channel/5/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_6": {
+        "midi_cc": 75,
+        "osc": "/channel/6/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_6": {
+        "midi_cc": 85,
+        "osc": "/channel/6/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_6": {
+        "midi_note": 13,
+        "osc": "/channel/6/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_6": {
+        "midi_note": 21,
+        "osc": "/channel/6/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_6": {
+        "midi_note": 29,
+        "osc": "/channel/6/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_6": {
+        "midi_note": 37,
+        "osc": "/channel/6/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_7": {
+        "midi_cc": 76,
+        "osc": "/channel/7/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_7": {
+        "midi_cc": 86,
+        "osc": "/channel/7/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_7": {
+        "midi_note": 14,
+        "osc": "/channel/7/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_7": {
+        "midi_note": 22,
+        "osc": "/channel/7/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_7": {
+        "midi_note": 30,
+        "osc": "/channel/7/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_7": {
+        "midi_note": 38,
+        "osc": "/channel/7/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fader_8": {
+        "midi_cc": 77,
+        "osc": "/channel/8/fader",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "knob_8": {
+        "midi_cc": 87,
+        "osc": "/channel/8/knob",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 100
+      },
+      "rec_8": {
+        "midi_note": 15,
+        "osc": "/channel/8/rec",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "solo_8": {
+        "midi_note": 23,
+        "osc": "/channel/8/solo",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "mute_8": {
+        "midi_note": 31,
+        "osc": "/channel/8/mute",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "select_8": {
+        "midi_note": 39,
+        "osc": "/channel/8/select",
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      }
+    }
   },
-  "knob_1": {
-    "midi_cc": 80,
-    "osc": "/channel/1/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_1": {
-    "midi_note": 8,
-    "osc": "/channel/1/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_1": {
-    "midi_note": 16,
-    "osc": "/channel/1/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_1": {
-    "midi_note": 24,
-    "osc": "/channel/1/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_1": {
-    "midi_note": 32,
-    "osc": "/channel/1/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_2": {
-    "midi_cc": 71,
-    "osc": "/channel/2/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_2": {
-    "midi_cc": 81,
-    "osc": "/channel/2/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_2": {
-    "midi_note": 9,
-    "osc": "/channel/2/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_2": {
-    "midi_note": 17,
-    "osc": "/channel/2/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_2": {
-    "midi_note": 25,
-    "osc": "/channel/2/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_2": {
-    "midi_note": 33,
-    "osc": "/channel/2/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_3": {
-    "midi_cc": 72,
-    "osc": "/channel/3/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_3": {
-    "midi_cc": 82,
-    "osc": "/channel/3/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_3": {
-    "midi_note": 10,
-    "osc": "/channel/3/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_3": {
-    "midi_note": 18,
-    "osc": "/channel/3/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_3": {
-    "midi_note": 26,
-    "osc": "/channel/3/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_3": {
-    "midi_note": 34,
-    "osc": "/channel/3/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_4": {
-    "midi_cc": 73,
-    "osc": "/channel/4/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_4": {
-    "midi_cc": 83,
-    "osc": "/channel/4/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_4": {
-    "midi_note": 11,
-    "osc": "/channel/4/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_4": {
-    "midi_note": 19,
-    "osc": "/channel/4/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_4": {
-    "midi_note": 27,
-    "osc": "/channel/4/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_4": {
-    "midi_note": 35,
-    "osc": "/channel/4/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_5": {
-    "midi_cc": 74,
-    "osc": "/channel/5/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_5": {
-    "midi_cc": 84,
-    "osc": "/channel/5/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_5": {
-    "midi_note": 12,
-    "osc": "/channel/5/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_5": {
-    "midi_note": 20,
-    "osc": "/channel/5/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_5": {
-    "midi_note": 28,
-    "osc": "/channel/5/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_5": {
-    "midi_note": 36,
-    "osc": "/channel/5/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_6": {
-    "midi_cc": 75,
-    "osc": "/channel/6/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_6": {
-    "midi_cc": 85,
-    "osc": "/channel/6/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_6": {
-    "midi_note": 13,
-    "osc": "/channel/6/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_6": {
-    "midi_note": 21,
-    "osc": "/channel/6/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_6": {
-    "midi_note": 29,
-    "osc": "/channel/6/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_6": {
-    "midi_note": 37,
-    "osc": "/channel/6/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_7": {
-    "midi_cc": 76,
-    "osc": "/channel/7/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_7": {
-    "midi_cc": 86,
-    "osc": "/channel/7/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_7": {
-    "midi_note": 14,
-    "osc": "/channel/7/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_7": {
-    "midi_note": 22,
-    "osc": "/channel/7/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_7": {
-    "midi_note": 30,
-    "osc": "/channel/7/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_7": {
-    "midi_note": 38,
-    "osc": "/channel/7/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "fader_8": {
-    "midi_cc": 77,
-    "osc": "/channel/8/fader",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": -128,
-    "osc_max": 10
-  },
-  "knob_8": {
-    "midi_cc": 87,
-    "osc": "/channel/8/knob",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 100
-  },
-  "rec_8": {
-    "midi_note": 15,
-    "osc": "/channel/8/rec",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "solo_8": {
-    "midi_note": 23,
-    "osc": "/channel/8/solo",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "mute_8": {
-    "midi_note": 31,
-    "osc": "/channel/8/mute",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
-  },
-  "select_8": {
-    "midi_note": 39,
-    "osc": "/channel/8/select",
-    "midi_min": 0,
-    "midi_max": 127,
-    "osc_min": 0,
-    "osc_max": 1
+  "layer_2": {
+    "name": "FX",
+    "mappings": {
+      
+    }
   }
 }

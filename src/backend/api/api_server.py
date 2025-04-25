@@ -11,6 +11,29 @@ import os
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/views/xctl-gui'))
 
 app = FastAPI()
+
+# --- Preset API ---
+from backend.api.preset_api import preset_router
+app.include_router(preset_router)
+
+from backend.utils.config import load_config
+
+CONFIG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../config.yaml'))
+# Load config
+config = load_config(CONFIG_PATH)
+
+# Create the global MidiHandler instance for the API
+from backend.midi.midi_handler import MidiHandler
+midi_handler = MidiHandler(
+    input_port_name=config['midi']['input_port'],
+    output_port_name=config['midi']['output_port']
+)
+
+# Import and include the layer status API
+from backend.api.layer_status import layer_status_router, set_midi_handler_for_status
+set_midi_handler_for_status(midi_handler)
+app.include_router(layer_status_router)
+
 from fastapi.responses import FileResponse
 from fastapi import Request, Body
 from fastapi.middleware.cors import CORSMiddleware

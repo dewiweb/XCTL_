@@ -1,7 +1,54 @@
 {
-  "fader_1": {"midi_cc": 87, "osc": "/channel/1/fader"},
-  "knob_1": {"midi_cc": 88, "osc": "/channel/1/knob"},
-  "mute_1": {"midi_note": 60, "osc": "/channel/1/mute"},
-  "solo_1": {"midi_note": 61, "osc": "/channel/1/solo"},
-  "fader_2": {"midi_cc": 89, "osc": "/channel/2/fader"}
+  "layer_1": {
+    "name": "Main",
+    "mappings": {
+      "fader_1": {
+        "osc": "/channel/1/fader",
+        "midi_cc": 70,
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      },
+      "mute_1": {
+        "osc": "/channel/1/mute",
+        "midi_note": 60
+      },
+      "solo_1": {
+        "osc": "/channel/1/solo",
+        "midi_note": 61
+      },
+      "fader_2": {
+        "osc": "/channel/2/fader",
+        "midi_cc": 71,
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": -128,
+        "osc_max": 10
+      }
+    }
+  },
+  "layer_2": {
+    "name": "FX",
+    "mappings": {
+      "fx_send_1": {
+        "osc": "/fx/1/send",
+        "midi_cc": 80,
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      },
+      "fx_return_1": {
+        "osc": "/fx/1/return",
+        "midi_cc": 81,
+        "midi_min": 0,
+        "midi_max": 127,
+        "osc_min": 0,
+        "osc_max": 1
+      }
+    }
+  }
 }
+
+
